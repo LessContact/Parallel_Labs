@@ -144,7 +144,7 @@ std::vector<float> Solve() {
         float localDelta = 0.0f;
         float localMaxDelta = std::numeric_limits<float>::min();
 
-        if (ProcessNum > 0)  // send lower stripe, receive upper
+        if (ProcessNum > 0)  // send lower stripe, receive to bottom from upper
         {
             MPI_Isend(layer.data() + N * N, N * N, MPI_FLOAT, ProcessNum - 1,
                       80085, MPI_COMM_WORLD, &lowerSend); // a
@@ -152,7 +152,7 @@ std::vector<float> Solve() {
                       MPI_ANY_TAG, MPI_COMM_WORLD, &lowerRecv); // b
         }
 
-        if (ProcessNum < ClusterSize - 1)  // send upper stripe, receive lower
+        if (ProcessNum < ClusterSize - 1)  // send upper stripe, receive to top from lower
         {
             MPI_Isend(layer.data() + N * N * layerSize, N * N, MPI_FLOAT, ProcessNum + 1,
                       80085, MPI_COMM_WORLD, &upperSend); // b
@@ -192,7 +192,8 @@ std::vector<float> Solve() {
             std::cout << "Epsilon: " << epsilon << std::endl;
         }
 
-        memcpy(layer.data(), layerBuffer.data(), layer.size() * sizeof(layer[0]));
+//        memcpy(layer.data(), layerBuffer.data(), layer.size() * sizeof(layer[0]));
+        layerBuffer.swap(layer);
     }
     if (ProcessNum == 0) {
         std::cout << "Iterations: " << iterationCount << std::endl;
