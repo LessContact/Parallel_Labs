@@ -54,6 +54,8 @@ target_link_libraries(lab4 ${MPI_CXX_LIBRARIES})
 target_compile_options(lab4 PRIVATE -O3)
 #target_link_libraries(lab1 ${MPI_C_LIBRARIES})
 
-add_executable(lab5 lab5/src/main.cpp)
+add_executable(lab5 lab5/src/main.cpp
+        lab5/src/LockingQueue.h
+        lab5/src/Task.h)
 target_link_libraries(lab5 ${MPI_CXX_LIBRARIES})
-target_compile_options(lab5 PRIVATE -O3)
+target_compile_options(lab5 PRIVATE -O0)
