@@ -6,12 +6,12 @@
 
 class Task{
 public:
-    Task(uint32_t time) : sleepMili(time) {}
+    Task(uint32_t time) : sleepMilli(time) {}
     ~Task() = default;
 
     void executeTask(){
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleepMili));
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepMilli));
     }
-private:
-    uint32_t sleepMili;
+
+    uint32_t sleepMilli;
 };
